@@ -12,7 +12,7 @@ import java.io.InputStream;
 import java.io.OutputStream; 
 import java.io.IOException; 
 
-public class PONG extends PApplet {
+public class pong extends PApplet {
 
 int x,y,deplacementX,deplacementY,w,z;
 
@@ -63,8 +63,6 @@ public void bouger(){
 }	
 
 public void rebondir(){
-
-	// Rebondir sur le mur
 	if (x > width-10 && deplacementX > 0) {
 		deplacementX = -deplacementX;
 	}
@@ -74,11 +72,10 @@ public void rebondir(){
 		deplacementY = -deplacementY;
 	}
 
-	if (y < 10 && deplacementY < 0) {
-		deplacementY = -deplacementY;
-	}
-
-
+	 if (y < 10 && deplacementY < 10) 
+	 {
+	   deplacementY = abs(deplacementY); // rendre positive cette valeur
+	 }
 
 	// Rebomdir sur le plateau
 	if (x<w+35 && y<z+85 && y>z) {
@@ -88,12 +85,22 @@ public void rebondir(){
 	if(x < 10){
 		noLoop();
 		println("GAME OVER");
+		println("Pour lancer une nouvelle partie appuyer sur la touche n");
+
 	}
 
 
 }
+
+public void keyPressed(){
+	if (key == 'n' || key == 'N') {
+		x = y = 200;
+		deplacementX = -deplacementX;
+		loop();
+	}
+}
   static public void main(String[] passedArgs) {
-    String[] appletArgs = new String[] { "PONG" };
+    String[] appletArgs = new String[] { "pong" };
     if (passedArgs != null) {
       PApplet.main(concat(appletArgs, passedArgs));
     } else {

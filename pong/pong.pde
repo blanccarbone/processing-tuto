@@ -47,8 +47,6 @@ void bouger(){
 }	
 
 void rebondir(){
-
-	// Rebondir sur le mur
 	if (x > width-10 && deplacementX > 0) {
 		deplacementX = -deplacementX;
 	}
@@ -58,11 +56,10 @@ void rebondir(){
 		deplacementY = -deplacementY;
 	}
 
-	if (y < 10 && deplacementY < 0) {
-		deplacementY = -deplacementY;
-	}
-
-
+	 if (y < 10 && deplacementY < 10) 
+	 {
+	   deplacementY = abs(deplacementY); // rendre positive cette valeur
+	 }
 
 	// Rebomdir sur le plateau
 	if (x<w+35 && y<z+85 && y>z) {
@@ -72,7 +69,19 @@ void rebondir(){
 	if(x < 10){
 		noLoop();
 		println("GAME OVER");
+		println("Pour lancer une nouvelle partie appuyer sur la touche n");
+
 	}
 
 
+}
+
+void keyPressed(){
+	if (key == 'n' || key == 'N') {
+		x = y = 200;
+		deplacementX = -deplacementX;
+		loop();
+	}else {
+		
+	}
 }
