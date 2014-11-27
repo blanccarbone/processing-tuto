@@ -1,6 +1,22 @@
+import processing.core.*; 
+import processing.data.*; 
+import processing.event.*; 
+import processing.opengl.*; 
+
+import java.util.HashMap; 
+import java.util.ArrayList; 
+import java.io.File; 
+import java.io.BufferedReader; 
+import java.io.PrintWriter; 
+import java.io.InputStream; 
+import java.io.OutputStream; 
+import java.io.IOException; 
+
+public class PONG extends PApplet {
+
 int x,y,deplacementX,deplacementY,w,z;
 
-void setup() {
+public void setup() {
 	size(400, 400);
 	z=60;
 	w=15;
@@ -12,7 +28,7 @@ void setup() {
 	
 }
 
-void draw() {
+public void draw() {
 	nettoyer();
 	dessiner();
 	bouger();
@@ -20,11 +36,11 @@ void draw() {
 }
 
 
-void nettoyer(){
+public void nettoyer(){
 	background(0);
 }
 
-void dessiner(){
+public void dessiner(){
 	// Dessin du plateau
 	fill(255);
 	rect(w, z, 25, 85);
@@ -36,7 +52,7 @@ void dessiner(){
 	line(200, 0, 200, 400);
 }
 
-void bouger(){
+public void bouger(){
 	// Deplacement de la balle
 	x+=deplacementX;
 	y+=deplacementY;
@@ -46,7 +62,7 @@ void bouger(){
 
 }	
 
-void rebondir(){
+public void rebondir(){
 
 	// Rebondir sur le mur
 	if (x > width-10 && deplacementX > 0) {
@@ -75,4 +91,13 @@ void rebondir(){
 	}
 
 
+}
+  static public void main(String[] passedArgs) {
+    String[] appletArgs = new String[] { "PONG" };
+    if (passedArgs != null) {
+      PApplet.main(concat(appletArgs, passedArgs));
+    } else {
+      PApplet.main(appletArgs);
+    }
+  }
 }
