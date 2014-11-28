@@ -1,25 +1,29 @@
-PImage b;
+color c = color(0);
+float x = 0.0;
+float y = 100;
+float speed = 1;
+
 
 void setup() {
-	b = loadImage("image.jpg");
-	size(b.width, b.height);
-	image(b, 0, 0);
+	size(200, 200);
 
-// On commence a prendre les couleurs
-
-	color a = b.get(100, 100);
-	float c = red(a);
-	float d = green(a);
-	float e = blue(a);
-
-	float[] couleur_image = new float[3];
-	couleur_image[0] = c;
-	couleur_image[1] = d;
-	couleur_image[2] = e;
-
-	println("couleur_image: "+couleur_image);
-
-	
 }
 
-	
+void draw() {
+	background(255);
+	move();
+	display();	
+}
+
+
+void move(){
+	x += speed;
+	if (x > width) {
+		x=0;
+	}
+}
+
+void display(){
+	fill(c);
+	rect(x, y, 30, 10);
+}
