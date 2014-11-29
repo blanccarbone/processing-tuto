@@ -3,6 +3,8 @@ import processing.data.*;
 import processing.event.*; 
 import processing.opengl.*; 
 
+import processing.pdf.*; 
+
 import java.util.HashMap; 
 import java.util.ArrayList; 
 import java.io.File; 
@@ -14,16 +16,21 @@ import java.io.IOException;
 
 public class walker extends PApplet {
 
-int num = 500;
+
+
+int num = 5;
 float diametre = 0.3f;
 float fr;
 Walker walk[] = new Walker[num];
 boolean continuer;
+PGraphicsPDF pdf;
 
 
 
  public void setup(){
-    size(1500,800, P2D); // on choisi la taille du sketch 
+    size(800,300, P2D); // on choisi la taille du sketch 
+     pdf = (PGraphicsPDF) beginRecord(PDF, "walker.pdf");
+    println("D\u00e9but du record");
     background(255); // on donne un fond blanc
     smooth(); // on am\u00e9liore le rendu (en option)
     
@@ -38,7 +45,7 @@ boolean continuer;
 
 public void draw(){
     continuer = true;
-    fr = map(mouseX, 0, width, 10, 6000);
+    fr = map(mouseX, 0, width, 10, 200);
     frameRate(fr);
     //on choisi au hasard un mouvement pour x et y compris entre -1 et 1 
 
@@ -49,6 +56,36 @@ public void draw(){
     }
 }
 
+
+public void keyPressed(){
+
+    if(key == 's' || key == 'S'){
+        if(continuer){
+            noLoop();
+            continuer = !continuer;
+        }else{
+            loop();
+            continuer= !continuer;
+        }
+    }    
+            
+    if (key == 'r') {
+        endRecord();
+        println("Image correctement export\u00e9 en PDF");
+        exit();
+    }
+
+    if (key == 'n') {
+        pdf.nextPage();
+        println("Nouvelle page cr\u00e9e");        
+    }
+
+
+
+
+  
+}
+    
 
 class Walker{
     //On initialise toutes les variables
@@ -124,28 +161,6 @@ class Walker{
     
 
 }
-
-      
-
-
-public void keyPressed(){
-
-    if(key == 's' || key == 'S'){
-        if(continuer){
-            noLoop();
-            continuer = !continuer;
-        }else{
-            loop();
-            continuer= !continuer;
-        }
-     }    
-            
-
-
-  
-}
-    
-
   static public void main(String[] passedArgs) {
     String[] appletArgs = new String[] { "walker" };
     if (passedArgs != null) {
