@@ -1,15 +1,31 @@
+import processing.core.*; 
+import processing.data.*; 
+import processing.event.*; 
+import processing.opengl.*; 
+
+import java.util.HashMap; 
+import java.util.ArrayList; 
+import java.io.File; 
+import java.io.BufferedReader; 
+import java.io.PrintWriter; 
+import java.io.InputStream; 
+import java.io.OutputStream; 
+import java.io.IOException; 
+
+public class walker extends PApplet {
+
 int num = 500;
-float diametre = 0.3;
+float diametre = 0.3f;
 float fr;
 Walker walk[] = new Walker[num];
 boolean continuer;
 
 
 
- void setup(){
+ public void setup(){
     size(1500,800, P2D); // on choisi la taille du sketch 
     background(255); // on donne un fond blanc
-    smooth(); // on améliore le rendu (en option)
+    smooth(); // on am\u00e9liore le rendu (en option)
     
     for (int i = 0; i < num; i++) {
         walk[i] = new Walker(diametre);
@@ -20,7 +36,7 @@ boolean continuer;
 
 
 
-void draw(){
+public void draw(){
     continuer = true;
     fr = map(mouseX, 0, width, 10, 6000);
     frameRate(fr);
@@ -40,7 +56,7 @@ class Walker{
     float d1, d2;
     float taille;
     float fr;
-    color c;
+    int c;
 
     Walker(){
         positionx = random(0, width);
@@ -59,16 +75,16 @@ class Walker{
         d2 = nDiam*10;
     }
 
-    void bouger(){
-        directionx = int(random(-2, 2));
-        directiony = int(random(-2, 2));
-        // La nouvelle position de l'ellispe est égale à son ancienne position (x et y) + un int entre -1 et 1
+    public void bouger(){
+        directionx = PApplet.parseInt(random(-2, 2));
+        directiony = PApplet.parseInt(random(-2, 2));
+        // La nouvelle position de l'ellispe est \u00e9gale \u00e0 son ancienne position (x et y) + un int entre -1 et 1
         positiony = positiony + directiony;
         positionx = positionx + directionx;
     }
 
 
-    void collision(){
+    public void collision(){
         if (positionx <0) {
           positionx = width;
         }
@@ -87,20 +103,20 @@ class Walker{
     }
 
 
-    void display(){
+    public void display(){
         c = color(random(0, 255));
-        taille = int(random(d1, d2));
+        taille = PApplet.parseInt(random(d1, d2));
         stroke(c);
 
         if(keyPressed){
             if(key == '+')
-                d1 += 0.5;
+                d1 += 0.5f;
             if(key == '-')
-                d1 -= 0.5;
+                d1 -= 0.5f;
         }
 
         if(mousePressed){
-            d1 = map(mouseY, 0, height, 0.5, 200);
+            d1 = map(mouseY, 0, height, 0.5f, 200);
         }
 
         ellipse(positionx, positiony, taille, taille); // enfin on dessinne notre ellipse
@@ -112,7 +128,7 @@ class Walker{
       
 
 
-void keyPressed(){
+public void keyPressed(){
 
     if(key == 's' || key == 'S'){
         if(continuer){
@@ -130,3 +146,12 @@ void keyPressed(){
 }
     
 
+  static public void main(String[] passedArgs) {
+    String[] appletArgs = new String[] { "walker" };
+    if (passedArgs != null) {
+      PApplet.main(concat(appletArgs, passedArgs));
+    } else {
+      PApplet.main(appletArgs);
+    }
+  }
+}
