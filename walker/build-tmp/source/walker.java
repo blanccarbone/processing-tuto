@@ -32,7 +32,7 @@ PGraphicsPDF pdf;
 
  public void setup(){
     size(800,500, P2D); // on choisi la taille du sketch 
-     pdf = (PGraphicsPDF) beginRecord(PDF, "walker.pdf");
+     pdf = (PGraphicsPDF) beginRecord(PDF, "walker-test.pdf");
     println("D\u00e9but du record");
     background(255); // on donne un fond blanc
     smooth(); // on am\u00e9liore le rendu (en option)
@@ -83,9 +83,14 @@ public void keyPressed(){
 
 
     if (key == 'n') {
-        walk.add(new Walker());
+        walk.add(new Walker(mouseX, mouseY));
         println("Nouvelle particule ajout\u00e9e");        
         }
+
+    if (key == 'b') {
+        walk.add(new Walker());
+        println("Nouvelle particule random ajout\u00e9e");        
+        }        
 
     if (key == 'd') {
         background(255);        
@@ -109,12 +114,19 @@ class Walker{
     int c;
 
     Walker(){
-        positionx = mouseX;
-        positiony = mouseY;        
+        positionx = random(0, width);
+        positiony = random(0, height);        
         d1 = 1;
         d2 = 10;
     }
 
+    Walker(float mouse1, float mouse2){
+        positionx = mouse1;
+        positiony = mouse2;
+        d1 = 1;
+        d2 = 10;
+
+    }
 
     public void bouger(){
         directionx = PApplet.parseInt(random(-2, 2));

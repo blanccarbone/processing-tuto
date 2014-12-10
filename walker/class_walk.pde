@@ -7,12 +7,19 @@ class Walker{
     color c;
 
     Walker(){
-        positionx = mouseX;
-        positiony = mouseY;        
+        positionx = random(0, width);
+        positiony = random(0, height);        
         d1 = 1;
         d2 = 10;
     }
 
+    Walker(float mouse1, float mouse2){
+        positionx = mouse1;
+        positiony = mouse2;
+        d1 = 1;
+        d2 = 10;
+
+    }
 
     void bouger(){
         directionx = int(random(-2, 2));

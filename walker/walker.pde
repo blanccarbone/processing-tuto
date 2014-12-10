@@ -14,7 +14,7 @@ PGraphicsPDF pdf;
 
  void setup(){
     size(800,500, P2D); // on choisi la taille du sketch 
-     pdf = (PGraphicsPDF) beginRecord(PDF, "walker.pdf");
+     pdf = (PGraphicsPDF) beginRecord(PDF, "walker-test.pdf");
     println("Début du record");
     background(255); // on donne un fond blanc
     smooth(); // on améliore le rendu (en option)
@@ -65,9 +65,14 @@ void keyPressed(){
 
 
     if (key == 'n') {
-        walk.add(new Walker());
+        walk.add(new Walker(mouseX, mouseY));
         println("Nouvelle particule ajoutée");        
         }
+
+    if (key == 'b') {
+        walk.add(new Walker());
+        println("Nouvelle particule random ajoutée");        
+        }        
 
     if (key == 'd') {
         background(255);        
