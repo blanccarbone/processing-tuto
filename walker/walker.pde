@@ -1,41 +1,47 @@
 import processing.pdf.*;
 
-int num = 5;
+ArrayList<Walker> walk;
+int nbwalk;
+
+
+
 float diametre = 0.3;
 float fr;
-Walker walk[] = new Walker[num];
 boolean continuer;
 PGraphicsPDF pdf;
 
 
 
  void setup(){
-    size(800,300, P2D); // on choisi la taille du sketch 
+    size(800,500, P2D); // on choisi la taille du sketch 
      pdf = (PGraphicsPDF) beginRecord(PDF, "walker.pdf");
     println("Début du record");
     background(255); // on donne un fond blanc
     smooth(); // on améliore le rendu (en option)
-    
-    for (int i = 0; i < num; i++) {
-        walk[i] = new Walker(diametre);
+
+    nbwalk = 0;
+    walk = new ArrayList<Walker>();
+    for (int i=0; i<nbwalk; i++){
+        walk.add(new Walker());
     }
 
-    smooth();
+    frameRate(400);
+    
+
 }
 
 
 
 void draw(){
     continuer = true;
-    fr = map(mouseX, 0, width, 10, 200);
-    frameRate(fr);
-    //on choisi au hasard un mouvement pour x et y compris entre -1 et 1 
+    for (int i=0; i<walk.size(); i++){
+        Walker w = walk.get(i);
+        w.bouger();
+        w.collision();
+        w.display();
 
-    for (int i = 0; i < num; i++) {
-        walk[i].bouger();
-        walk[i].collision();
-        walk[i].display();
     }
+
 }
 
 
@@ -57,15 +63,22 @@ void keyPressed(){
         exit();
     }
 
+
     if (key == 'n') {
-        pdf.nextPage();
-        println("Nouvelle page crée");        
-    }
+        walk.add(new Walker());
+        println("Nouvelle particule ajoutée");        
+        }
+
+    if (key == 'd') {
+        background(255);        
+        }
+}
+
+
+
 
 
 
 
   
-}
     
-

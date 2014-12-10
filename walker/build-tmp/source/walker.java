@@ -18,42 +18,48 @@ public class walker extends PApplet {
 
 
 
-int num = 5;
+ArrayList<Walker> walk;
+int nbwalk;
+
+
+
 float diametre = 0.3f;
 float fr;
-Walker walk[] = new Walker[num];
 boolean continuer;
 PGraphicsPDF pdf;
 
 
 
  public void setup(){
-    size(800,300, P2D); // on choisi la taille du sketch 
+    size(800,500, P2D); // on choisi la taille du sketch 
      pdf = (PGraphicsPDF) beginRecord(PDF, "walker.pdf");
     println("D\u00e9but du record");
     background(255); // on donne un fond blanc
     smooth(); // on am\u00e9liore le rendu (en option)
-    
-    for (int i = 0; i < num; i++) {
-        walk[i] = new Walker(diametre);
+
+    nbwalk = 0;
+    walk = new ArrayList<Walker>();
+    for (int i=0; i<nbwalk; i++){
+        walk.add(new Walker());
     }
 
-    smooth();
+    frameRate(400);
+    
+
 }
 
 
 
 public void draw(){
     continuer = true;
-    fr = map(mouseX, 0, width, 10, 200);
-    frameRate(fr);
-    //on choisi au hasard un mouvement pour x et y compris entre -1 et 1 
+    for (int i=0; i<walk.size(); i++){
+        Walker w = walk.get(i);
+        w.bouger();
+        w.collision();
+        w.display();
 
-    for (int i = 0; i < num; i++) {
-        walk[i].bouger();
-        walk[i].collision();
-        walk[i].display();
     }
+
 }
 
 
@@ -75,18 +81,25 @@ public void keyPressed(){
         exit();
     }
 
+
     if (key == 'n') {
-        pdf.nextPage();
-        println("Nouvelle page cr\u00e9e");        
-    }
+        walk.add(new Walker());
+        println("Nouvelle particule ajout\u00e9e");        
+        }
+
+    if (key == 'd') {
+        background(255);        
+        }
+}
+
+
+
 
 
 
 
   
-}
     
-
 class Walker{
     //On initialise toutes les variables
     float positionx ,positiony, directionx, directiony;
@@ -96,21 +109,12 @@ class Walker{
     int c;
 
     Walker(){
-        positionx = random(0, width);
-        positiony = random(0, height);        
-        d1 = 2;
-        d2 = 20;
+        positionx = mouseX;
+        positiony = mouseY;        
+        d1 = 1;
+        d2 = 10;
     }
 
-    Walker(float nDiam){
-        // positionx = random((width/3), (2*(width/3)));
-        // positiony = random((height/3), (2*(height/3)));
-
-        positionx = random(0, width);
-        positiony = random(0, height);
-        d1 = nDiam;
-        d2 = nDiam*10;
-    }
 
     public void bouger(){
         directionx = PApplet.parseInt(random(-2, 2));
@@ -158,11 +162,13 @@ class Walker{
 
         ellipse(positionx, positiony, taille, taille); // enfin on dessinne notre ellipse
     }
+
+
     
 
 }
   static public void main(String[] passedArgs) {
-    String[] appletArgs = new String[] { "walker" };
+    String[] appletArgs = new String[] { "--full-screen", "--bgcolor=#666666", "--stop-color=#cccccc", "walker" };
     if (passedArgs != null) {
       PApplet.main(concat(appletArgs, passedArgs));
     } else {

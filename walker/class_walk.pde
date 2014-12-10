@@ -7,21 +7,12 @@ class Walker{
     color c;
 
     Walker(){
-        positionx = random(0, width);
-        positiony = random(0, height);        
-        d1 = 2;
-        d2 = 20;
+        positionx = mouseX;
+        positiony = mouseY;        
+        d1 = 1;
+        d2 = 10;
     }
 
-    Walker(float nDiam){
-        // positionx = random((width/3), (2*(width/3)));
-        // positiony = random((height/3), (2*(height/3)));
-
-        positionx = random(0, width);
-        positiony = random(0, height);
-        d1 = nDiam;
-        d2 = nDiam*10;
-    }
 
     void bouger(){
         directionx = int(random(-2, 2));
@@ -69,6 +60,8 @@ class Walker{
 
         ellipse(positionx, positiony, taille, taille); // enfin on dessinne notre ellipse
     }
+
+
     
 
 }
